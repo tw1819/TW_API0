@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="bobter">Obter</button>
+    <div id="conteudo">
+
+    </div>
+    <script>
+        var bobter = document.getElementById("bobter");
+        bobter.addEventListener("click", obterUsers);
+
+        function obterUsers() {
+            var userdata;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "https://reqres.in/api/users");
+            xhr.onload = function () {
+                alert(xhr.responseText);
+                userdata = JSON.parse(xhr.responseText);
+                console.log(userdata);
+                afixaUsers(userdata);
+
+            }
+            xhr.send();
+        }
+
+        function afixaUsers(users) {
+
+            for(let u=0; u<users.data.length; u++) {
+                novouser = document.createElement("p");
+                novoavatar = document.createElement("img");
+                novoavatar.src = users.data[u].avatar;
+                novouser.appendChild(novoavatar);
+                novouser.innerHTML += users.data[u].first_name + " " + users.data[u].last_name;
+                divconteudo = document.getElementById("conteudo");
+                divconteudo.appendChild(novouser);
+            }
+        }
+    </script>
+</body>
+</html>
